@@ -1,6 +1,14 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   runApp(const MainApp());
 }
 
@@ -12,6 +20,8 @@ class MainApp extends StatefulWidget {
 }
 
 class _MainAppState extends State<MainApp> {
+  final DatabaseReference database = FirebaseDatabase.instance.ref();
+
   final nameController = TextEditingController(text: 'Aldito Pasha');
   final deptController = TextEditingController(text: 'Kolej Tun Dr Ismail');
   final staffNoController = TextEditingController(text: '0035');
@@ -50,7 +60,7 @@ class _MainAppState extends State<MainApp> {
               _ProfileSummaryCard(),
               Card(
                   child: ListTile(
-                title: Text('Name'),
+                title: const Text('Name'),
                 subtitle: TextField(
                   controller: nameController,
                   decoration:
@@ -59,7 +69,7 @@ class _MainAppState extends State<MainApp> {
               )),
               Card(
                   child: ListTile(
-                title: Text('Department'),
+                title: const Text('Department'),
                 subtitle: TextField(
                   controller: deptController,
                   decoration:
@@ -68,7 +78,7 @@ class _MainAppState extends State<MainApp> {
               )),
               Card(
                   child: ListTile(
-                title: Text('Staff No'),
+                title: const Text('Staff No'),
                 subtitle: TextField(
                   controller: staffNoController,
                   decoration:
@@ -77,7 +87,7 @@ class _MainAppState extends State<MainApp> {
               )),
               Card(
                   child: ListTile(
-                title: Text('Email'),
+                title: const Text('Email'),
                 subtitle: TextField(
                   controller: emailController,
                   decoration:
@@ -86,7 +96,7 @@ class _MainAppState extends State<MainApp> {
               )),
               Card(
                   child: ListTile(
-                title: Text('Contact No'),
+                title: const Text('Contact No'),
                 subtitle: TextField(
                   controller: contactController,
                   decoration:
@@ -94,14 +104,26 @@ class _MainAppState extends State<MainApp> {
                 ),
               )),
               FilledButton(
-                  onPressed: () {
-                    print(nameController.text);
-                    print(deptController.text);
-                    print(staffNoController.text);
-                    print(emailController.text);
-                    print(contactController.text);
+                  onPressed: () async {
+                    try {
+                      print(nameController.text);
+                      print(deptController.text);
+                      print(staffNoController.text);
+                      print(emailController.text);
+                      print(contactController.text);
+
+                      await database.update({
+                        'name': nameController.text,
+                        'dept': deptController.text,
+                        'staffNo': staffNoController.text,
+                        'email': emailController.text,
+                        'contact': contactController.text,
+                      });
+                    } catch (e) {
+                      print('You got an error! $e');
+                    }
                   },
-                  child: Text("Submit"))
+                  child: const Text("Submit"))
             ]),
       ),
     );
