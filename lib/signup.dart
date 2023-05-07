@@ -1,36 +1,33 @@
 import 'package:flutter/material.dart';
- 
-void main() => runApp(const MyApp());
- 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
- 
-  static const String _title = 'Sample App';
- 
+
+void main() => runApp(const SignUp());
+
+class SignUp extends StatelessWidget {
+  const SignUp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: _title,
       home: Scaffold(
-        appBar: AppBar(title: const Text(_title)),
+        appBar: AppBar(),
         body: const MyStatefulWidget(),
       ),
     );
   }
 }
- 
+
 class MyStatefulWidget extends StatefulWidget {
   const MyStatefulWidget({Key? key}) : super(key: key);
- 
+
   @override
   State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
 }
- 
+
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
- 
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -40,8 +37,11 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             AppBar(
               backgroundColor: Colors.orange,
               leading: IconButton(
-              icon: Icon(Icons.arrow_back, color: Colors.black,),
-              onPressed: ()=>Navigator.of(context).pop(),
+                icon: Icon(
+                  Icons.arrow_back,
+                  color: Colors.black,
+                ),
+                onPressed: () => Navigator.of(context).pop(),
               ),
               title: Text('Sign Up Page'),
               centerTitle: true,
@@ -61,13 +61,11 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 padding: const EdgeInsets.all(10),
                 child: const Text(
                   'BOOK A SPACE WITH NO FUSS',
-                  style: TextStyle(
-                    color: Colors.orange,
-                    fontSize: 20),
+                  style: TextStyle(color: Colors.orange, fontSize: 20),
                 )),
             Container(
-                height: 50,
-                padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+              height: 50,
+              padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
             ),
             Container(
               padding: const EdgeInsets.all(10),
@@ -110,28 +108,27 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               ),
             ),
             Container(
-                height: 50,
-                padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+              height: 50,
+              padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
             ),
             Container(
                 height: 50,
                 padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                 child: ElevatedButton(
-                  child: const Text('Sign Up'),
-                  onPressed: () {
-                    print(nameController.text);
-                    print(emailController.text);
-                    print(passwordController.text);
-                  },
-                  style: ElevatedButton.styleFrom(
+                    child: const Text('Sign Up'),
+                    onPressed: () {
+                      print(nameController.text);
+                      print(emailController.text);
+                      print(passwordController.text);
+                    },
+                    style: ElevatedButton.styleFrom(
                       primary: Colors.orange,
-                      padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 40, vertical: 20),
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                        ),
-                    )
-                )
-            ),
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                    ))),
           ],
         ));
   }
