@@ -1,99 +1,134 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:room_booking_system/reusable_widgets/reusable_widget.dart';
-import 'package:room_booking_system/home.dart';
-import 'package:room_booking_system/resetpassword.dart';
-import 'package:room_booking_system/signup.dart';
 import 'package:flutter/material.dart';
 
-class Login extends StatefulWidget {
+void main() => runApp(const Login());
+
+class Login extends StatelessWidget {
   const Login({Key? key}) : super(key: key);
 
   @override
-  _Login createState() => _Login();
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(),
+        body: const LoginPage(),
+      ),
+    );
+  }
 }
 
-class _Login extends State<Login> {
-  TextEditingController _passwordTextController = TextEditingController();
-  TextEditingController _emailTextController = TextEditingController();
+class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
+
+  @override
+  State<LoginPage> createState() => _LoginPage();
+}
+
+class _LoginPage extends State<LoginPage> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.fromLTRB(
-                20, MediaQuery.of(context).size.height * 0.2, 20, 0),
-            child: Column(
-              children: <Widget>[
-                const SizedBox(
-                  height: 30,
+    return Padding(
+        padding: const EdgeInsets.all(10),
+        child: ListView(
+          children: <Widget>[
+            AppBar(
+              backgroundColor: Colors.orange,
+              leading: IconButton(
+                icon: Icon(
+                  Icons.arrow_back,
+                  color: Colors.black,
                 ),
-                reusableTextField("Enter UserName", Icons.person_outline, false,
-                    _emailTextController),
-                const SizedBox(
-                  height: 20,
-                ),
-                reusableTextField("Enter Password", Icons.lock_outline, true,
-                    _passwordTextController),
-                const SizedBox(
-                  height: 5,
-                ),
-                forgetPassword(context),
-                firebaseUIButton(context, "Sign In", () {
-                  FirebaseAuth.instance
-                      .signInWithEmailAndPassword(
-                          email: _emailTextController.text,
-                          password: _passwordTextController.text)
-                      .then((value) {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => HomeScreen()));
-                  });
-                }),
-                signUpOption()
-              ],
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+              title: Text('Sign Up Page'),
+              centerTitle: true,
             ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Row signUpOption() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const Text("Don't have account?",
-            style: TextStyle(color: Colors.white70)),
-        GestureDetector(
-          onTap: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => SignUp()));
-          },
-          child: const Text(
-            " Sign Up",
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-          ),
-        )
-      ],
-    );
-  }
-
-  Widget forgetPassword(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: 35,
-      alignment: Alignment.bottomRight,
-      child: TextButton(
-        child: const Text(
-          "Forgot Password?",
-          style: TextStyle(color: Colors.white70),
-          textAlign: TextAlign.right,
-        ),
-        onPressed: () => Navigator.push(
-            context, MaterialPageRoute(builder: (context) => ResetPassword())),
-      ),
-    );
+            Container(
+                alignment: Alignment.center,
+                padding: const EdgeInsets.all(10),
+                child: const Text(
+                  'uniroom',
+                  style: TextStyle(
+                      color: Colors.orange,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 50),
+                )),
+            Container(
+                alignment: Alignment.center,
+                padding: const EdgeInsets.all(10),
+                child: const Text(
+                  'BOOK A SPACE WITH NO FUSS',
+                  style: TextStyle(color: Colors.orange, fontSize: 20),
+                )),
+            Container(
+              height: 50,
+              padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+            ),
+            Container(
+              padding: const EdgeInsets.all(10),
+              child: TextField(
+                controller: emailController,
+                decoration: new InputDecoration(
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.orange),
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
+                  labelText: 'Email',
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+              child: TextField(
+                obscureText: true,
+                controller: passwordController,
+                decoration: new InputDecoration(
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.orange),
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
+                  labelText: 'Password',
+                ),
+              ),
+            ),
+            Container(
+              height: 50,
+              padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+            ),
+            Container(
+                height: 50,
+                padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                child: ElevatedButton(
+                    child: const Text('Login'),
+                    onPressed: () {
+                      print(emailController.text);
+                      print(passwordController.text);
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.orange,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                    ))),
+            Container(
+              height: 50,
+              padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+            ),
+            Container(
+                padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                child: const Text(
+                  "Forgot your password?",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Color(0xffb5b5b5),
+                    fontSize: 15,
+                  ),
+                )),
+          ],
+        ));
   }
 }

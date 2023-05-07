@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:room_booking_system/edit_profile.dart';
 import 'package:room_booking_system/login.dart';
-import 'package:room_booking_system/home.dart';
+import 'package:room_booking_system/logout.dart';
 import 'package:room_booking_system/signup.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -31,7 +29,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const MainApp(),
+      home: Login(),
     );
   }
 }
