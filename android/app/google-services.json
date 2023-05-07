@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "17721238167",
+    "project_id": "excelcius-room-booking-system",
+    "storage_bucket": "excelcius-room-booking-system.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:17721238167:android:f8acf25cc8d51dd034ffd2",
+        "android_client_info": {
+          "package_name": "com.example.room_booking_system"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "17721238167-3mq17hrj0k78vc50ng1g282v7u7tq7nm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmAvCSnT64vDbpN7ji6wg5jG_vim_U0gk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "17721238167-3mq17hrj0k78vc50ng1g282v7u7tq7nm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
