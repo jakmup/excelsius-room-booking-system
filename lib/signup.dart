@@ -19,10 +19,12 @@ class _SignUpState extends State<SignUp> {
     return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-          backgroundColor: Colors.orange,
+          backgroundColor: Colors.transparent,
           elevation: 0,
+          leading: BackButton(color: Colors.orange),
         ),
         body: Container(
+            color: Color.fromRGBO(255, 244, 228, 1),
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
             child: SingleChildScrollView(
