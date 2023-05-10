@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:room_booking_system/reusable_widgets/reusable_widget.dart';
-import 'package:room_booking_system/home.dart';
 import 'package:flutter/material.dart';
 
 class ResetPassword extends StatefulWidget {
@@ -19,10 +18,6 @@ class _ResetPasswordState extends State<ResetPassword> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: const Text(
-          "Reset Password",
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-        ),
       ),
       body: Container(
           width: MediaQuery.of(context).size.width,
@@ -32,6 +27,8 @@ class _ResetPasswordState extends State<ResetPassword> {
             padding: EdgeInsets.fromLTRB(20, 120, 20, 0),
             child: Column(
               children: <Widget>[
+                logoWidget("assets/images/logo.png"),
+                const SizedBox(height: 40),
                 const SizedBox(
                   height: 20,
                 ),

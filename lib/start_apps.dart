@@ -1,151 +1,92 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:room_booking_system/login.dart';
+import 'package:room_booking_system/reusable_widgets/reusable_widget.dart';
+import 'package:room_booking_system/signup.dart';
 
-void main() => runApp(const MyApp());
+class Start extends StatefulWidget {
+  const Start({Key? key}) : super(key: key);
+  @override
+  _Start createState() => _Start();
+}
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
+class _Start extends State<Start> {
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: AppsWidget(),
+    return Scaffold(
+        body: Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+            image: AssetImage('assets/images/Image1.png'), fit: BoxFit.cover),
       ),
-    );
+      child: Padding(
+        padding: EdgeInsets.fromLTRB(
+            20, MediaQuery.of(context).size.height * 0.2, 20, 100),
+        child: Column(children: <Widget>[
+          logoWidget("assets/images/logo.png"),
+          const SizedBox(height: 40),
+          loginButton(context),
+          signUpButton(context),
+        ]),
+      ),
+    ));
   }
 }
 
-class AppsWidget extends StatefulWidget {
-  const AppsWidget({Key? key}) : super(key: key);
-  @override
-  _AppsWidgetState createState() => _AppsWidgetState();
+Widget loginButton(BuildContext context) {
+  return Container(
+    decoration: const BoxDecoration(
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(16),
+        topRight: Radius.circular(16),
+        bottomLeft: Radius.circular(16),
+        bottomRight: Radius.circular(16),
+      ),
+      color: Color.fromRGBO(255, 153, 0, 1),
+    ),
+    width: MediaQuery.of(context).size.width,
+    height: 35,
+    margin: const EdgeInsets.fromLTRB(0, 10, 0, 20),
+    alignment: Alignment.bottomCenter,
+    child: TextButton(
+      child: const Text(
+        "Login",
+        style: TextStyle(
+          color: Colors.white,
+        ),
+        textAlign: TextAlign.center,
+      ),
+      onPressed: () => Navigator.push(
+          context, MaterialPageRoute(builder: (context) => Login())),
+    ),
+  );
 }
 
-class _AppsWidgetState extends State<AppsWidget> {
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.all(10),
-        child: Stack(children: <Widget>[
-          Positioned(
-              top: 0,
-              left: 0,
-              child: Container(
-                  width: 414,
-                  height: 1075,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage('assets/images/Image1.png'),
-                        fit: BoxFit.fitWidth),
-                  ))),
-          Positioned(
-              top: 0,
-              left: 0,
-              child: Container(
-                  width: 414, height: 896, decoration: const BoxDecoration())),
-          const Positioned(
-              top: 140,
-              left: 118,
-              child: Text(
-                'uniroom',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: Color.fromRGBO(255, 153, 0, 1),
-                    fontFamily: 'Ubuntu',
-                    fontSize: 45,
-                    letterSpacing:
-                        0 /*percentages not used in flutter. defaulting to zero*/,
-                    fontWeight: FontWeight.normal,
-                    height: 1),
-              )),
-          const Positioned(
-              top: 202,
-              left: 67,
-              child: Text(
-                'Book a space with no fuss',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: Color.fromRGBO(255, 153, 0, 1),
-                    fontFamily: 'Ubuntu',
-                    fontSize: 15,
-                    letterSpacing:
-                        0 /*percentages not used in flutter. defaulting to zero*/,
-                    fontWeight: FontWeight.normal,
-                    height: 1),
-              )),
-          Positioned(
-              top: 307,
-              left: 117,
-              child: Container(
-                  width: 179,
-                  height: 43,
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(16),
-                      topRight: Radius.circular(16),
-                      bottomLeft: Radius.circular(16),
-                      bottomRight: Radius.circular(16),
-                    ),
-                    color: Color.fromRGBO(255, 153, 0, 1),
-                  ))),
-          Positioned(
-              child: Container(
-                  decoration: const BoxDecoration(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(16),
-              topRight: Radius.circular(16),
-              bottomLeft: Radius.circular(16),
-              bottomRight: Radius.circular(16),
-            ),
-            color: Color.fromRGBO(255, 153, 0, 1),
-          ))),
-          const Positioned(
-              top: 320,
-              left: 176,
-              child: Text(
-                'Log in',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: Color.fromRGBO(255, 255, 255, 1),
-                    fontFamily: 'Ubuntu',
-                    fontSize: 15,
-                    letterSpacing:
-                        0 /*percentages not used in flutter. defaulting to zero*/,
-                    fontWeight: FontWeight.normal,
-                    height: 1),
-              )),
-          const Positioned(
-              top: 380,
-              left: 172,
-              child: Text(
-                'Sign Up',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: Color.fromRGBO(255, 255, 255, 1),
-                    fontFamily: 'Ubuntu',
-                    fontSize: 15,
-                    letterSpacing:
-                        0 /*percentages not used in flutter. defaulting to zero*/,
-                    fontWeight: FontWeight.normal,
-                    height: 1),
-              )),
-          Positioned(
-              top: 476,
-              left: 228,
-              child: Container(
-                  width: 42,
-                  height: 42,
-                  decoration: const BoxDecoration(
-                    color: Color.fromRGBO(255, 255, 255, 1),
-                  ),
-                  child: Stack(children: <Widget>[
-                    Positioned(
-                        top: 12.600000381469727,
-                        left: 6.300000190734863,
-                        child: SvgPicture.asset('assets/images/vector.svg',
-                            semanticsLabel: 'vector')),
-                  ]))),
-        ]));
-  }
+Widget signUpButton(BuildContext context) {
+  return Container(
+    decoration: const BoxDecoration(
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(16),
+        topRight: Radius.circular(16),
+        bottomLeft: Radius.circular(16),
+        bottomRight: Radius.circular(16),
+      ),
+      color: Color.fromRGBO(255, 153, 0, 1),
+    ),
+    width: MediaQuery.of(context).size.width,
+    height: 35,
+    margin: const EdgeInsets.fromLTRB(0, 10, 0, 20),
+    alignment: Alignment.bottomCenter,
+    child: TextButton(
+      child: const Text(
+        "Sign Up",
+        style: TextStyle(
+          color: Colors.white,
+        ),
+        textAlign: TextAlign.center,
+      ),
+      onPressed: () => Navigator.push(
+          context, MaterialPageRoute(builder: (context) => SignUp())),
+    ),
+  );
 }
