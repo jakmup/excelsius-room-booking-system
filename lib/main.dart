@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 //import 'package:room_booking_system/edit_profile.dart';
 import 'package:room_booking_system/firebase_options.dart';
+import 'package:room_booking_system/home.dart';
 import 'package:room_booking_system/login.dart';
 import 'package:room_booking_system/start_apps.dart';
 //import 'package:room_booking_system/signup.dart';
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const Start(),
+      home: const HomeScreen(),
     );
   }
 }
