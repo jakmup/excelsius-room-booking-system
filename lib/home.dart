@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:room_booking_system/reusable_widgets/reusable_widget.dart';
 import 'package:room_booking_system/start_apps.dart';
+import 'package:room_booking_system/room_detail.dart';
 
 void main() {
   runApp(const HomeScreen());
@@ -80,10 +81,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   suffixIcon: Icon(Icons.search),
                 )),
             SizedBox(height: 20),
-            _buildCard(),
-            _buildCard(),
-            _buildCard(),
-            _buildCard(),
+            _buildCard(context),
+            _buildCard(context),
+            _buildCard(context),
+            _buildCard(context),
           ],
         ),
       ),
@@ -104,7 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
           BottomNavigationBarItem(
               icon: Icon(Icons.home, color: Colors.black), label: "Home"),
           BottomNavigationBarItem(
-              icon: Icon(Icons.note, color: Colors.black), label: "Note"),
+              icon: Icon(Icons.note, color: Colors.black), label: "Booking"),
           BottomNavigationBarItem(
               icon: Icon(Icons.wallet, color: Colors.black), label: "Payment"),
           BottomNavigationBarItem(
@@ -114,54 +115,67 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-Card _buildCard() {
+Card _buildCard(BuildContext context) {
   return Card(
-      elevation: 4.0,
-      child: Row(
-        children: [
-          Container(
-              child: Image(
-            fit: BoxFit.fitHeight,
-            height: 100,
-            width: 100,
-            alignment: Alignment.topLeft,
-            image: AssetImage("assets/images/UTMbilikSeminar.jpg"),
-          )),
-          Expanded(
-              child: Container(
-            padding: EdgeInsets.only(
-              top: 20,
-              left: 20,
-              right: 10,
+    elevation: 4.0,
+    child: Row(
+      children: [
+        Container(
+            child: Image(
+          fit: BoxFit.fitHeight,
+          height: 100,
+          width: 100,
+          alignment: Alignment.topLeft,
+          image: AssetImage("assets/images/UTMbilikSeminar.jpg"),
+        )),
+        Expanded(
+            child: Container(
+          padding: EdgeInsets.only(
+            top: 10,
+            left: 20,
+            right: 10,
+            bottom: 10,
+          ),
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("Bilik Seminar M01"),
+              ],
             ),
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("Bilik Seminar M01"),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Icon(
-                    Icons.location_on,
-                    size: 15,
-                  ),
-                  Text(
-                    "M01, Kolej Tun Dr. Ismail",
-                    textAlign: TextAlign.left,
-                  )
-                ],
-              ),
-              SizedBox(height: 10),
-              Text(
-                "Room Capacity : 120 pax",
-                style: TextStyle(fontSize: 10, color: Colors.grey),
-              )
-            ]),
-          ))
-        ],
-      ));
+            SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Icon(
+                  Icons.location_on,
+                  size: 15,
+                ),
+                Text(
+                  "M01, Kolej Tun Dr. Ismail",
+                  textAlign: TextAlign.left,
+                )
+              ],
+            ),
+            SizedBox(height: 10),
+            Text(
+              "Room Capacity : 120 pax",
+              style: TextStyle(fontSize: 10, color: Colors.grey),
+            ),
+          ]),
+        )),
+        Container(
+          child: IconButton(
+              icon: Icon(Icons.chevron_right_rounded),
+              color: Colors.orange,
+              iconSize: 45,
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => roomDetail()));
+              }),
+        )
+      ],
+    ),
+  );
 }

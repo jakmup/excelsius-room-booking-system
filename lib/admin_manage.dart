@@ -304,7 +304,8 @@ class _LisTileExampleState extends State<LisTileExample>
                                                                 ),
                                                                 Container(
                                                                   child: Row(
-                                                                    children: <Widget>[
+                                                                    children: <
+                                                                        Widget>[
                                                                       ElevatedButton(
                                                                         style: ElevatedButton
                                                                             .styleFrom(
