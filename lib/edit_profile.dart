@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -9,20 +10,26 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(const MainApp());
+  if (FirebaseAuth.instance.currentUser != null) {
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+    print(uid);
+  }
+
+  runApp(const Profile());
 }
 
-class MainApp extends StatefulWidget {
-  const MainApp({super.key});
+class Profile extends StatefulWidget {
+  const Profile({super.key});
 
   @override
-  State<MainApp> createState() => _MainAppState();
+  State<Profile> createState() => _ProfileState();
 }
 
-class _MainAppState extends State<MainApp> {
-  final DatabaseReference database = FirebaseDatabase.instance.ref();
+class _ProfileState extends State<Profile> {
+  final String uid = FirebaseAuth.instance.currentUser?.uid as String;
+  final DatabaseReference database = FirebaseDatabase.instance.ref("User");
 
-  final nameController = TextEditingController(text: 'Aldito Pasha');
+  final nameController = TextEditingController(text: 'nama');
   final deptController = TextEditingController(text: 'Kolej Tun Dr Ismail');
   final staffNoController = TextEditingController(text: '0035');
   final emailController = TextEditingController(text: 'aldito@utm.my');

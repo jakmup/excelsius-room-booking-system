@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:room_booking_system/book_room.dart';
 import 'package:room_booking_system/reusable_widgets/reusable_widget.dart';
 import 'package:room_booking_system/start_apps.dart';
 import 'package:room_booking_system/home.dart';
@@ -97,7 +98,7 @@ class _roomDetail extends State<roomDetail> {
                 SizedBox(height: 40),
                 submitButton(context, "Book Room", () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => HomeScreen()));
+                      MaterialPageRoute(builder: (context) => Booking()));
                 })
               ]))
         ]));
