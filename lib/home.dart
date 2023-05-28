@@ -96,9 +96,9 @@ class _HomeScreenState extends State<HomeScreen> {
     return BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         currentIndex: _selectedIndex,
-        onTap: (value) {
+        onTap: (values) {
           setState(() {
-            _selectedIndex = value;
+            _selectedIndex = values;
           });
         },
         items: const [
