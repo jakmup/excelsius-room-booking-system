@@ -30,20 +30,20 @@ class _UpdateRoomState extends State<UpdateRoom> {
   // final String uid = FirebaseAuth.instance.currentUser?.uid as String;
   static String uid = '1';
   static String roomID = '1';
-  final DatabaseReference database = FirebaseDatabase.instance.ref("Room/$uid/$roomID");
-
-  final _controllerName = TextEditingController();
-  final _controllerLocation = TextEditingController();
-  final _controllerDescription = TextEditingController();
-  final _controllerPrice = TextEditingController();
+  late final DatabaseReference database =
+      FirebaseDatabase.instance.ref("Room/$uid/$roomID");
 
   // toggle initialization
   late String _statusRoom = 'close';
-  final List<bool> _status = <bool>[true, false];
+  late List<bool> _status = <bool>[true, false];
   bool vertical = false;
 
   late double _distanceToField;
   late TextfieldTagsController _controllerAmenities;
+  final _controllerName = TextEditingController();
+  final _controllerLocation = TextEditingController();
+  final _controllerDescription = TextEditingController();
+  final _controllerPrice = TextEditingController();
   List<String> tags = [];
 
   //show popup dialog
@@ -81,6 +81,34 @@ class _UpdateRoomState extends State<UpdateRoom> {
   void initState() {
     super.initState();
     _controllerAmenities = TextfieldTagsController();
+    database.onValue.listen((event) {
+      DataSnapshot snapshot = event.snapshot;
+
+      // Read the values of all the children
+      String roomName = snapshot.child("roomName").value as String;
+      String roomDescription =
+          snapshot.child("roomDescription").value as String;
+      String roomLocation = snapshot.child("roomLocation").value as String;
+      String status = snapshot.child("status").value as String;
+      String roomPrice = snapshot.child("roomPrice").value as String;
+      // DataSnapshot amenitiesSnapshot = snapshot.child("amenities");
+      // List<dynamic> amenitiesList = amenitiesSnapshot.value as List<dynamic>;
+      // List<String> amenities = amenitiesList.cast<String>().toList();
+
+      // Update the state with the retrieved values
+      setState(() {
+        _controllerName.text = roomName;
+        _controllerDescription.text = roomDescription;
+        _controllerLocation.text = roomLocation;
+        _controllerPrice.text = roomPrice;
+        if (status == "open") {
+          _status = <bool>[true, false];
+        } else {
+          _status = <bool>[false, true];
+        }
+        // tags = amenities;
+      });
+    });
   }
 
   @override
@@ -93,7 +121,7 @@ class _UpdateRoomState extends State<UpdateRoom> {
         ),
       ),
       child: Scaffold(
-        backgroundColor: Colors.white.withOpacity(0.8),
+          backgroundColor: Colors.white.withOpacity(0.8),
           body: ListView(
             padding: EdgeInsets.fromLTRB(15, 30, 15, 0),
             children: <Widget>[
@@ -339,6 +367,7 @@ class _UpdateRoomState extends State<UpdateRoom> {
                     Padding(
                       padding: EdgeInsets.fromLTRB(15, 10, 15, 0),
                       child: TextFieldTags(
+                        initialTags: tags,
                         textfieldTagsController: _controllerAmenities,
                         textSeparators: const [','],
                         letterCase: LetterCase.normal,
