@@ -6,6 +6,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:room_booking_system/room_list.dart';
 import 'package:textfield_tags/textfield_tags.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -542,8 +543,8 @@ class _AddRoomState extends State<AddRoom> {
                     // print('toTime: ${toTimeString}');
                     // print('paymentMethod: ${paymentTypeValue}');
                   }
-                  // Navigator.push(context,
-                  //     MaterialPageRoute(builder: (context) => RoomUsage()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => RoomList()));
                 },
                 child: const Text(
                   "Add",

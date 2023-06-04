@@ -91,9 +91,8 @@ class _UpdateRoomState extends State<UpdateRoom> {
       String roomLocation = snapshot.child("roomLocation").value as String;
       String status = snapshot.child("status").value as String;
       String roomPrice = snapshot.child("roomPrice").value as String;
-      // DataSnapshot amenitiesSnapshot = snapshot.child("amenities");
-      // List<dynamic> amenitiesList = amenitiesSnapshot.value as List<dynamic>;
-      // List<String> amenities = amenitiesList.cast<String>().toList();
+      DataSnapshot amenitiesSnapshot = snapshot.child("amenities");
+      dynamic amenitiesValue = amenitiesSnapshot.value;
 
       // Update the state with the retrieved values
       setState(() {
@@ -106,7 +105,10 @@ class _UpdateRoomState extends State<UpdateRoom> {
         } else {
           _status = <bool>[false, true];
         }
-        // tags = amenities;
+
+        tags = [amenitiesValue.replaceAll('[', '').replaceAll(']', '')];
+        _controllerAmenities.addTag = tags.toString();
+        // print(tags);
       });
     });
   }

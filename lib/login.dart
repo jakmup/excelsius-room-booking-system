@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:room_booking_system/reusable_widgets/reusable_widget.dart';
 import 'package:room_booking_system/home.dart';
 import 'package:room_booking_system/resetpassword.dart';
+import 'package:room_booking_system/room_list.dart';
 import 'package:room_booking_system/signup.dart';
 
 void main() => runApp(const Login());
@@ -57,7 +58,7 @@ class _Login extends State<Login> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => HomeScreen()));
+                                builder: (context) => RoomList()));
                       });
                     }),
                     signUpOption()

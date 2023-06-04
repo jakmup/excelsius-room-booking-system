@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:room_booking_system/add_room.dart';
 import 'package:room_booking_system/admin_manage_details.dart';
 import 'package:room_booking_system/reusable_widgets/reusable_widget.dart';
 import 'package:room_booking_system/room_list_details.dart';
@@ -82,6 +83,16 @@ class _RoomList extends State<RoomList> {
                   hintText: "Search a room here",
                   suffixIcon: Icon(Icons.search),
                 )),
+            FloatingActionButton(
+              child: Text("Add Room"),
+              foregroundColor: Color(0xffFFFAF2),
+              backgroundColor: Color(0xffffad27),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  side: BorderSide(color: Color(0xffffad27))),
+              onPressed: () => Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => AddRoom())),
+            ),
             SizedBox(height: 20),
             _buildCard(context),
             _buildCard(context),
