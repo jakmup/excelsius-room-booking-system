@@ -26,11 +26,48 @@ class RoomListDetail extends StatefulWidget {
 
 class _RoomListDetail extends State<RoomListDetail> {
   static String uid = '1';
-  final Query database = FirebaseDatabase.instance.ref("Room/$uid");
+  static String roomID = '1';
+  final Query database = FirebaseDatabase.instance.ref("Room");
   // final snapshot = database.get();
 
   int _selectedIndex = 1;
 
+  @override
+  void initState() {
+    super.initState();
+    database.onValue.listen((event) {
+      DataSnapshot snapshot = event.snapshot;
+
+      // Read the values of all the children
+      String roomName = snapshot.child("roomName").value as String;
+      String roomDescription =
+          snapshot.child("roomDescription").value as String;
+      String roomLocation = snapshot.child("roomLocation").value as String;
+      String status = snapshot.child("status").value as String;
+      String roomPrice = snapshot.child("roomPrice").value as String;
+    });
+  }
+
+  Widget roomList({required Map room}) {
+    return Container(
+        height: 400,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+          color: Colors.white,
+        ),
+        child: ListView(padding: EdgeInsets.zero, children: <Widget>[
+          SizedBox(height: 40),
+          ListTile(
+            title: Text('Description'),
+            subtitle: Text(
+              '${room['Description']} ${room['Status']} - ${room['Room Price']} ${room['Include']}',
+            ),
+          ),
+        ]));
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -90,167 +127,164 @@ class _RoomListDetail extends State<RoomListDetail> {
                           ])))
                     ],
                   )),
-              Container(
-                height: 400,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                  color: Colors.white,
+              Expanded(
+                // height: double.infinity,
+                // children: <Widget>[
+                child: FirebaseAnimatedList(
+                  query: database,
+                  itemBuilder: (BuildContext context, DataSnapshot snapshot,
+                      Animation<double> animation, int index) {
+                    Map room = snapshot.value as Map;
+                    room['key'] = snapshot.key;
+                    return roomList(room: room);
+                  },
                 ),
-                child: ListView(
-                  padding: EdgeInsets.zero,
+                // ],
+              ),
+              ListTile(
+                title: Row(
                   children: <Widget>[
-                    SizedBox(height: 40),
-                    ListTile(
-                      title: Text('Application Details'),
-                      subtitle: Text(
-                          "\n\nFrom : 14 Apr 2023 (Friday), 3.00 PM \nTo : 14 Apr 2023 (Friday), 5.00 PM \nNo of Guests : 50 \nPayment Status : Paid\n\n\n\nRequested by : Faizah Faiqah\nPhone No : 0123456789\nEmail : ffaiqah3@utm.my\nTimestamp : 8 April 2023, 2.00 PM\n\n"),
-                    ),
-                    ListTile(
-                      title: Row(
-                        children: <Widget>[
-                          Expanded(
-                            child: SizedBox(
-                              height: 40,
-                              width: 70,
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  primary: Colors.white,
-                                  onPrimary: Colors.red,
-                                  side: BorderSide(width: 3, color: Colors.red),
-                                ),
-                                onPressed: () {
-                                  showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return AlertDialog(
-                                        scrollable: true,
-                                        title: const Text("Are you sure?"),
-                                        content: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Column(
-                                            children: [
-                                              Container(
-                                                child: const Text(
-                                                    "Are you sure you want to continue?\n\n"),
-                                              ),
-                                              Container(
-                                                child: Row(
-                                                  children: <Widget>[
-                                                    ElevatedButton(
-                                                      style: ElevatedButton
-                                                          .styleFrom(
-                                                        primary: Colors.white,
-                                                        onPrimary: Colors.red,
-                                                        side: BorderSide(
-                                                            width: 3,
-                                                            color: Colors.red),
-                                                      ),
-                                                      onPressed: () {
-                                                        Navigator.pop(context);
-                                                      },
-                                                      child: Text("No"),
-                                                    ),
-                                                    Text("   "),
-                                                    ElevatedButton(
-                                                      style: ElevatedButton
-                                                          .styleFrom(
-                                                        primary: Colors.green,
-                                                        onPrimary: Colors.white,
-                                                      ),
-                                                      onPressed: () {
-                                                        showDialog(
-                                                          context: context,
-                                                          builder: (BuildContext
-                                                              context) {
-                                                            return AlertDialog(
-                                                              scrollable: true,
-                                                              content: Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                            .all(
-                                                                        8.0),
-                                                                child: Column(
-                                                                  children: [
-                                                                    Card(
-                                                                      child:
-                                                                          Image(
-                                                                        image: AssetImage(
-                                                                            "images/deleted.png"),
-                                                                        height:
-                                                                            90,
-                                                                        width:
-                                                                            90,
-                                                                      ),
-                                                                    ),
-                                                                    Container(
-                                                                      child: Text(
-                                                                          "\nRoom deleted successfully.\n"),
-                                                                    ),
-                                                                    ElevatedButton(
-                                                                      style: ElevatedButton
-                                                                          .styleFrom(
-                                                                        primary:
-                                                                            Colors.orange,
-                                                                        onPrimary:
-                                                                            Colors.white,
-                                                                      ),
-                                                                      child: const Text(
-                                                                          "Return"),
-                                                                      onPressed:
-                                                                          () {
-                                                                        Navigator.popUntil(
-                                                                            context,
-                                                                            (route) =>
-                                                                                route.isFirst);
-                                                                      },
-                                                                    ),
-                                                                  ],
+                    Expanded(
+                      child: SizedBox(
+                        height: 40,
+                        width: 70,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.white,
+                            onPrimary: Colors.red,
+                            side: BorderSide(width: 3, color: Colors.red),
+                          ),
+                          onPressed: () {
+                            _showDialogDelete({required Map room}) {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    scrollable: true,
+                                    title: const Text("Are you sure?"),
+                                    content: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                            child: const Text(
+                                                "Are you sure you want to continue?\n\n"),
+                                          ),
+                                          Container(
+                                            child: Row(
+                                              children: <Widget>[
+                                                ElevatedButton(
+                                                  style:
+                                                      ElevatedButton.styleFrom(
+                                                    primary: Colors.white,
+                                                    onPrimary: Colors.red,
+                                                    side: BorderSide(
+                                                        width: 3,
+                                                        color: Colors.red),
+                                                  ),
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                  child: Text("No"),
+                                                ),
+                                                Text("   "),
+                                                ElevatedButton(
+                                                  style:
+                                                      ElevatedButton.styleFrom(
+                                                    primary: Colors.green,
+                                                    onPrimary: Colors.white,
+                                                  ),
+                                                  onPressed: () {
+                                                    // ref
+                                                    //     .child(room['key'])
+                                                    //     .remove();
+                                                    showDialog(
+                                                      context: context,
+                                                      builder: (BuildContext
+                                                          context) {
+                                                        return AlertDialog(
+                                                          scrollable: true,
+                                                          content: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(8.0),
+                                                            child: Column(
+                                                              children: [
+                                                                Card(
+                                                                  child: Image(
+                                                                    image: AssetImage(
+                                                                        "images/deleted.png"),
+                                                                    height: 90,
+                                                                    width: 90,
+                                                                  ),
                                                                 ),
-                                                              ),
-                                                            );
-                                                          },
+                                                                Container(
+                                                                  child: Text(
+                                                                      "\nRoom deleted successfully.\n"),
+                                                                ),
+                                                                ElevatedButton(
+                                                                  style: ElevatedButton
+                                                                      .styleFrom(
+                                                                    primary: Colors
+                                                                        .orange,
+                                                                    onPrimary:
+                                                                        Colors
+                                                                            .white,
+                                                                  ),
+                                                                  child: const Text(
+                                                                      "Return"),
+                                                                  onPressed:
+                                                                      () {
+                                                                    Navigator.popUntil(
+                                                                        context,
+                                                                        (route) =>
+                                                                            route.isFirst);
+                                                                  },
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
                                                         );
                                                       },
-                                                      child: Text("Yes"),
-                                                    ),
-                                                  ],
+                                                    );
+                                                  },
+                                                  child: Text("Yes"),
                                                 ),
-                                              ),
-                                            ],
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                      );
-                                    },
+                                        ],
+                                      ),
+                                    ),
                                   );
                                 },
-                                child: Text("Delete"),
-                              ),
-                            ),
-                          ),
-                          Text("   "),
-                          Expanded(
-                            child: SizedBox(
-                              height: 40,
-                              width: 70,
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  primary: Colors.green,
-                                  onPrimary: Colors.white,
-                                ),
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => UpdateRoom()));
-                                },
-                                child: Text("Update"),
-                              ),
-                            ),
-                          ),
-                        ],
+                              );
+                            }
+                          },
+                          child: Text("Delete"),
+                        ),
                       ),
-                    )
+                    ),
+                    Text("   "),
+                    Expanded(
+                      child: SizedBox(
+                        height: 40,
+                        width: 70,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.green,
+                            onPrimary: Colors.white,
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => UpdateRoom()));
+                          },
+                          child: Text("Update"),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               )

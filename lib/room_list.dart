@@ -1,0 +1,181 @@
+import 'dart:ui';
+
+import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:room_booking_system/admin_manage_details.dart';
+import 'package:room_booking_system/reusable_widgets/reusable_widget.dart';
+import 'package:room_booking_system/room_list_details.dart';
+import 'package:room_booking_system/start_apps.dart';
+import 'package:room_booking_system/room_detail.dart';
+
+void main() {
+  runApp(const RoomList());
+}
+
+class RoomList extends StatefulWidget {
+  const RoomList({super.key});
+
+  @override
+  _RoomList createState() => _RoomList();
+}
+
+class _RoomList extends State<RoomList> {
+  int _selectedIndex = 1;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+          backgroundColor: Colors.white,
+          iconTheme: IconThemeData(color: Colors.orange)),
+      drawer: Drawer(
+        child: ListView(
+          // Important: Remove any padding from the ListView.
+          padding: EdgeInsets.zero,
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.orange,
+                image: DecorationImage(
+                    image: AssetImage('assets/images/Image1.png'),
+                    fit: BoxFit.cover),
+              ),
+              child: Text('uniroom'),
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.people,
+              ),
+              title: const Text('Profile'),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.exit_to_app,
+              ),
+              title: const Text('Log Out'),
+              onTap: () {
+                FirebaseAuth.instance.signOut().then((value) {
+                  print("Signed Out");
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Start()));
+                });
+              },
+            ),
+          ],
+        ),
+      ),
+      body: Center(
+        child: ListView(
+          shrinkWrap: true,
+          padding: const EdgeInsets.all(15.0),
+          children: <Widget>[
+            TextField(
+                cursorColor: Colors.orange,
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      borderSide: BorderSide.none),
+                  hintText: "Search a room here",
+                  suffixIcon: Icon(Icons.search),
+                )),
+            SizedBox(height: 20),
+            _buildCard(context),
+            _buildCard(context),
+          ],
+        ),
+      ),
+      bottomNavigationBar: buildBottomNavigationBar(),
+    );
+  }
+
+  BottomNavigationBar buildBottomNavigationBar() {
+    return BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        currentIndex: _selectedIndex,
+        onTap: (values) {
+          setState(() {
+            _selectedIndex = values;
+          });
+        },
+        items: const [
+          BottomNavigationBarItem(
+              icon: Icon(Icons.home, color: Colors.black), label: "Home"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.note, color: Colors.black), label: "Room"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.wallet, color: Colors.black), label: "Booking"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.add_alert), label: "Notification"),
+        ],
+        selectedItemColor: Colors.amber[800]);
+  }
+}
+
+Card _buildCard(BuildContext context) {
+  return Card(
+    elevation: 4.0,
+    child: Row(
+      children: [
+        Container(
+            child: Image(
+          fit: BoxFit.fitHeight,
+          height: 100,
+          width: 100,
+          alignment: Alignment.topLeft,
+          image: AssetImage("assets/images/UTMbilikSeminar.jpg"),
+        )),
+        Expanded(
+            child: Container(
+          padding: EdgeInsets.only(
+            top: 10,
+            left: 20,
+            right: 10,
+            bottom: 10,
+          ),
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("Bilik Seminar M01"),
+              ],
+            ),
+            SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Icon(
+                  Icons.location_on,
+                  size: 15,
+                ),
+                Text(
+                  "M01, Kolej Tun Dr. Ismail",
+                  textAlign: TextAlign.left,
+                )
+              ],
+            ),
+            SizedBox(height: 10),
+            Text(
+              "Room Capacity : 120 pax",
+              style: TextStyle(fontSize: 10, color: Colors.grey),
+            ),
+          ]),
+        )),
+        Container(
+          child: IconButton(
+              icon: Icon(Icons.chevron_right_rounded),
+              color: Colors.orange,
+              iconSize: 45,
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => RoomListDetail()));
+              }),
+        )
+      ],
+    ),
+  );
+}
