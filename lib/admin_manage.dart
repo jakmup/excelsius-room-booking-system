@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:room_booking_system/add_room.dart';
 import 'package:room_booking_system/admin_manage_details.dart';
 import 'package:room_booking_system/reusable_widgets/reusable_widget.dart';
 import 'package:room_booking_system/start_apps.dart';
@@ -24,8 +25,14 @@ class _ManagerScreenState extends State<ManagerScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+          title: const Text(
+            'Room Listing',
+            style: TextStyle(
+              color: Colors.black,
+            ),
+          ),
           backgroundColor: Colors.white,
-          iconTheme: IconThemeData(color: Colors.orange)),
+          iconTheme: const IconThemeData(color: Colors.orange)),
       drawer: Drawer(
         child: ListView(
           // Important: Remove any padding from the ListView.
@@ -65,29 +72,59 @@ class _ManagerScreenState extends State<ManagerScreen> {
           ],
         ),
       ),
-      body: Center(
-        child: ListView(
-          shrinkWrap: true,
-          padding: const EdgeInsets.all(15.0),
-          children: <Widget>[
-            TextField(
-                cursorColor: Colors.orange,
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white,
-                  border: OutlineInputBorder(
+      body: Column(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Rooms',
+                  style: TextStyle(
+                    fontSize: 36,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                IconButton(
+                  icon: Icon(Icons.add),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const AddRoom()),
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: ListView(
+              shrinkWrap: true,
+              padding: const EdgeInsets.all(15.0),
+              children: <Widget>[
+                TextField(
+                  cursorColor: Colors.orange,
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),
-                      borderSide: BorderSide.none),
-                  hintText: "Search a room here",
-                  suffixIcon: Icon(Icons.search),
-                )),
-            SizedBox(height: 20),
-            _buildCard(context),
-            _buildCard(context),
-            _buildCard(context),
-            _buildCard(context),
-          ],
-        ),
+                      borderSide: BorderSide.none,
+                    ),
+                    hintText: "Search a room here",
+                    suffixIcon: Icon(Icons.search),
+                  ),
+                ),
+                SizedBox(height: 20),
+                _buildCard(context),
+                _buildCard(context),
+                _buildCard(context),
+                _buildCard(context),
+              ],
+            ),
+          ),
+        ],
       ),
       bottomNavigationBar: buildBottomNavigationBar(),
     );
