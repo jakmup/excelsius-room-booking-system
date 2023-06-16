@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:room_booking_system/user_feedback.dart';
 
 import 'firebase_options.dart';
 
@@ -33,115 +34,139 @@ class _RoomUsageDetail extends State<RoomUsageDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xfffcfcfc),
-      appBar: AppBar(
-        title: const Text("Room Usage Detail"),
-        titleTextStyle: const TextStyle(
-          color: Color(0xff161618),
-          fontSize: 14,
-          fontFamily: "Poppins",
-          fontWeight: FontWeight.w500,
-        ),
-        backgroundColor: const Color(0XFFFCFCFC),
-        leading: GestureDetector(
-          child: const Icon(
-            Icons.arrow_back_ios,
+        backgroundColor: const Color(0xfffcfcfc),
+        appBar: AppBar(
+          title: const Text("Room Usage Detail"),
+          titleTextStyle: const TextStyle(
             color: Color(0xff161618),
+            fontSize: 14,
+            fontFamily: "Poppins",
+            fontWeight: FontWeight.w500,
           ),
-          onTap: () {
-            Navigator.pop(context);
-          },
+          backgroundColor: const Color(0XFFFCFCFC),
+          leading: GestureDetector(
+            child: const Icon(
+              Icons.arrow_back_ios,
+              color: Color(0xff161618),
+            ),
+            onTap: () {
+              Navigator.pop(context);
+            },
+          ),
         ),
-      ),
-      body: ListView(
-        children: <Widget>[
-          Center(
-            child: Card(
-              margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: SizedBox(
-                child: ListTile(
-                  contentPadding: const EdgeInsets.symmetric(
-                      vertical: 8.0, horizontal: 15.0),
-                  leading: Image(
-                    image: AssetImage('assets/images/room1.png'),
+        body: ListView(
+          children: <Widget>[
+            Center(
+              child: Card(
+                margin:
+                    const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: SizedBox(
+                  child: ListTile(
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 8.0, horizontal: 15.0),
+                    leading: Image(
+                      image: AssetImage('assets/images/room1.png'),
+                    ),
+                    // title: Text(bookingID),
+                    title: Text('Bilik Seminar'),
+                    subtitle: const Text('M01, Kolej Tun Dr Ismail'),
                   ),
-                  // title: Text(bookingID),
-                  title: Text('Bilik Seminar'),
-                  subtitle: const Text('M01, Kolej Tun Dr Ismail'),
                 ),
               ),
             ),
-          ),
-          Center(
-            child: Card(
-              margin: const EdgeInsets.symmetric(vertical: 7, horizontal: 20),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: SizedBox(
-                child: ListTile(
-                  contentPadding: const EdgeInsets.symmetric(
-                      vertical: 8.0, horizontal: 15.0),
-                  title: const Text('Status'),
-                  subtitle: const Text('Pending Approval'),
+            Center(
+              child: Card(
+                margin: const EdgeInsets.symmetric(vertical: 7, horizontal: 20),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: SizedBox(
+                  child: ListTile(
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 8.0, horizontal: 15.0),
+                    title: const Text('Status'),
+                    subtitle: const Text('Pending Approval'),
+                  ),
                 ),
               ),
             ),
-          ),
-          Center(
-            child: Card(
-              margin: const EdgeInsets.symmetric(vertical: 7, horizontal: 20),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: SizedBox(
-                child: ListTile(
-                  contentPadding: const EdgeInsets.symmetric(
-                      vertical: 8.0, horizontal: 15.0),
-                  title: const Text('Capacity'),
-                  subtitle: const Text('100'),
+            Center(
+              child: Card(
+                margin: const EdgeInsets.symmetric(vertical: 7, horizontal: 20),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: SizedBox(
+                  child: ListTile(
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 8.0, horizontal: 15.0),
+                    title: const Text('Capacity'),
+                    subtitle: const Text('100'),
+                  ),
                 ),
               ),
             ),
-          ),
-          Center(
-            child: Card(
-              margin: const EdgeInsets.symmetric(vertical: 7, horizontal: 20),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: SizedBox(
-                child: ListTile(
-                  contentPadding: const EdgeInsets.symmetric(
-                      vertical: 8.0, horizontal: 15.0),
-                  title: const Text('Booking Date'),
-                  subtitle: const Text('22-05-2023'),
+            Center(
+              child: Card(
+                margin: const EdgeInsets.symmetric(vertical: 7, horizontal: 20),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: SizedBox(
+                  child: ListTile(
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 8.0, horizontal: 15.0),
+                    title: const Text('Booking Date'),
+                    subtitle: const Text('22-05-2023'),
+                  ),
                 ),
               ),
             ),
-          ),
-          Center(
-            child: Card(
-              margin: const EdgeInsets.symmetric(vertical: 7, horizontal: 20),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: SizedBox(
-                child: ListTile(
-                  contentPadding: const EdgeInsets.symmetric(
-                      vertical: 8.0, horizontal: 15.0),
-                  title: const Text('Booking Time'),
-                  subtitle: const Text('1:00 PM - 4.00 PM'),
+            Center(
+              child: Card(
+                margin: const EdgeInsets.symmetric(vertical: 7, horizontal: 20),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: SizedBox(
+                  child: ListTile(
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 8.0, horizontal: 15.0),
+                    title: const Text('Booking Time'),
+                    subtitle: const Text('1:00 PM - 4.00 PM'),
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
-      ),
-      // bottomNavigationBar:
-    );
+          ],
+        ),
+        bottomNavigationBar: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+            child: FloatingActionButton(
+                foregroundColor: Color(0xffFFFAF2),
+                backgroundColor: Color(0xffffad27),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    side: BorderSide(color: Color(0xffffad27))),
+                onPressed: () async {
+                  // try {
+                  //   await database.push().update({
+                  //     // 'userID': uid,
+                  //     'feedbackName': _controllerFbName.text,
+                  //     'feedbackDescription': _controllerFbDesc.text,
+                  //   });
+                  // } catch (e) {
+                  //   print('You got an error! $e');
+                  // }
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => UserFeedback()));
+                },
+                child: const Text(
+                  "Add Feedback",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ))));
   }
 }
