@@ -34,7 +34,8 @@ class _UserFeedback extends State<UserFeedback> {
       FirebaseDatabase.instance.ref("Feedback/$uid");
 
   // TextEditingController guestController = TextEditingController();
-  final feedbackController = TextEditingController(text: '');
+  final _controllerFbName = TextEditingController();
+  final _controllerFbDesc = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +73,29 @@ class _UserFeedback extends State<UserFeedback> {
               children: <Widget>[
                 Center(
                   child: Container(
-                    height: 400,
+                    height: 50,
+                    width: 400,
+                    margin: EdgeInsets.all(10),
+                    child: TextField(
+                        decoration: InputDecoration(
+                            hintText: 'Name', border: OutlineInputBorder()),
+                        controller: _controllerFbName),
+                  ),
+                )
+              ],
+            ),
+          ),
+          Card(
+            margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Center(
+                  child: Container(
+                    height: 300,
                     width: 400,
                     margin: EdgeInsets.all(10),
                     child: TextField(
@@ -80,18 +103,38 @@ class _UserFeedback extends State<UserFeedback> {
                             hintText: 'Type your feedback here...',
                             border: OutlineInputBorder()),
                         maxLines: 100,
-                        controller: feedbackController),
+                        controller: _controllerFbDesc),
                   ),
                 )
               ],
             ),
           ),
-          SizedBox(height: 20),
-          submitButton(context, "Submit Feedback", () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => HomeScreen()));
-          })
-        ]));
+        ]),
+        bottomNavigationBar: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+            child: FloatingActionButton(
+                foregroundColor: Color(0xffFFFAF2),
+                backgroundColor: Color(0xffffad27),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    side: BorderSide(color: Color(0xffffad27))),
+                onPressed: () async {
+                  try {
+                    await database.push().update({
+                      // 'userID': uid,
+                      'feedbackName': _controllerFbName.text,
+                      'feedbackDescription': _controllerFbDesc.text,
+                    });
+                  } catch (e) {
+                    print('You got an error! $e');
+                  }
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => RoomUsage()));
+                },
+                child: const Text(
+                  "Submit Feedback",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ))));
   }
 }
 
