@@ -4,7 +4,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:room_booking_system/payment_page.dart';
 import 'package:room_booking_system/room_usage.dart';
 
 import 'firebase_options.dart';
@@ -393,7 +392,7 @@ class _BookingState extends State<Booking> {
                                 padding: EdgeInsets.fromLTRB(176, 0, 0, 0),
                                 // padding: EdgeInsets.symmetric(horizontal: 175),
                                 child:
-                                    Text('RM120', style: TextStyle(height: 2)))
+                                    Text('RM350', style: TextStyle(height: 2)))
                           ]),
                       Row(children: <Widget>[
                         Padding(
@@ -402,7 +401,7 @@ class _BookingState extends State<Booking> {
                                 style: TextStyle(height: 2))),
                         Padding(
                             padding: EdgeInsets.fromLTRB(140, 0, 0, 0),
-                            child: Text('RM120', style: TextStyle(height: 2)))
+                            child: Text('RM350', style: TextStyle(height: 2)))
                       ]),
                     ],
                   ),
@@ -445,7 +444,7 @@ class _BookingState extends State<Booking> {
                     print('paymentMethod: ${paymentTypeValue}');
                   }
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => PaymentPage()));
+                      MaterialPageRoute(builder: (context) => RoomUsage()));
                 },
                 child: const Text(
                   "Proceed With Payment",
