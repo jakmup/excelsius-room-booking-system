@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:room_booking_system/admin_manage.dart';
 import 'package:room_booking_system/reusable_widgets/reusable_widget.dart';
 import 'package:room_booking_system/home.dart';
 import 'package:room_booking_system/resetpassword.dart';
@@ -55,10 +56,17 @@ class _Login extends State<Login> {
                               email: emailController.text,
                               password: passwordController.text)
                           .then((value) {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => RoomList()));
+                        if (emailController.text == 'haqifaq@gmail.com') {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ManagerScreen()));
+                        } else {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => HomeScreen()));
+                        }
                       });
                     }),
                     signUpOption()

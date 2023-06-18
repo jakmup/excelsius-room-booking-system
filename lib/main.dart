@@ -37,7 +37,11 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
+<<<<<<< HEAD
       home: const Booking(),
+=======
+      home: const Login(),
+>>>>>>> be18aa895c9d53d0283a1fb8bd4ee6ec2337edbf
     );
   }
 }
