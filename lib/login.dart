@@ -55,10 +55,17 @@ class _Login extends State<Login> {
                               email: emailController.text,
                               password: passwordController.text)
                           .then((value) {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => RoomList()));
+                        if (emailController.text == 'haqifaq@gmail.com') {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => RoomList()));
+                        } else {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => HomeScreen()));
+                        }
                       });
                     }),
                     signUpOption()
