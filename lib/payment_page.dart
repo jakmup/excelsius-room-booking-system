@@ -4,8 +4,8 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:room_booking_system/payment_page.dart';
 import 'package:room_booking_system/room_usage.dart';
+import 'package:room_booking_system/payment_page.dart';
 
 import 'firebase_options.dart';
 
@@ -15,17 +15,82 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(new MaterialApp(home: new Booking()));
+  runApp(MaterialApp(home: PaymentPage()));
 }
 
-class Booking extends StatefulWidget {
-  const Booking({Key? key}) : super(key: key);
+class PaymentPage extends StatefulWidget {
+  const PaymentPage({Key? key}) : super(key: key);
 
   @override
-  State<Booking> createState() => _BookingState();
+  State<PaymentPage> createState() => _PaymentPageState();
 }
 
-class _BookingState extends State<Booking> {
+enum PaymentType { Online, Card }
+
+class _PaymentPageState extends State<PaymentPage> {
+  PaymentType _selectedPaymentType = PaymentType.Online;
+
+  Widget buildOnlinePaymentWidget() {
+    return Column(
+      children: [
+        RadioListTile<PaymentType>(
+          title: const Text('Online Payment'),
+          value: PaymentType.Online,
+          groupValue: _selectedPaymentType,
+          onChanged: (PaymentType? value) {
+            setState(() {
+              _selectedPaymentType = value!;
+            });
+          },
+        ),
+        if (_selectedPaymentType == PaymentType.Online)
+          Image(
+            image: AssetImage('assets/images/fpx-logo.jpg'),
+          ),
+      ],
+    );
+  }
+
+  Widget buildCardPaymentWidget() {
+    return Column(
+      children: [
+        RadioListTile<PaymentType>(
+          title: const Text('Card Payment'),
+          value: PaymentType.Card,
+          groupValue: _selectedPaymentType,
+          onChanged: (PaymentType? value) {
+            setState(() {
+              _selectedPaymentType = value!;
+            });
+          },
+        ),
+        if (_selectedPaymentType == PaymentType.Card)
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              children: [
+                TextFormField(
+                  decoration: const InputDecoration(labelText: 'Card Number'),
+                ),
+                TextFormField(
+                  decoration: const InputDecoration(labelText: 'Expiry Date'),
+                ),
+                TextFormField(
+                  decoration: const InputDecoration(labelText: 'CVV'),
+                ),
+              ],
+            ),
+          ),
+      ],
+    );
+  }
+
+  // @override
+  //Widget build(BuildContext context) {
+  // // TODO: implement build
+  // throw UnimplementedError();
+  // }
+
   // final String uid = FirebaseAuth.instance.currentUser?.uid as String;
   static String uid = '1';
   // final String roomId = FirebaseAuth.instance.Room.roo as String;
@@ -48,10 +113,13 @@ class _BookingState extends State<Booking> {
 
   late String paymentTypeValue = 'Online Payment';
 
+  late Widget paymentTypeWidget;
+
   @override
   void initState() {
     super.initState();
     _initialDateFrom = DateTime.now().add(const Duration(days: 1));
+    //paymentTypeWidget = buildOnlinePaymentWidget();
   }
 
   Future<void> _selectDateFrom() async {
@@ -178,137 +246,11 @@ class _BookingState extends State<Booking> {
                 child: ListTile(
                   contentPadding: const EdgeInsets.symmetric(
                       vertical: 8.0, horizontal: 15.0),
-                  title: const Text('Non-refundable'),
-                  subtitle: const Text(
-                      'You cannot refund your payment when you cancel booking'),
+                  title: const Text('RM 120'),
+                  subtitle: const Text('One Hundred and Twenty Ringgit'),
                 ),
               ),
             ),
-            Card(
-                margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: SizedBox(
-                  height: 50,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      Text('From'),
-                      ElevatedButton(
-                          style: ButtonStyle(
-                              side:
-                                  MaterialStateProperty.resolveWith<BorderSide>(
-                                      (states) =>
-                                          BorderSide(color: Color(0xffffad27))),
-                              backgroundColor:
-                                  MaterialStateProperty.resolveWith<Color>(
-                                      (states) => Color(0xffFFFAF2)),
-                              shape: MaterialStateProperty.resolveWith<
-                                  OutlinedBorder>((_) {
-                                return RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8));
-                              }),
-                              foregroundColor: MaterialStateProperty.all<Color>(
-                                  Color(0xffffad27))),
-                          onPressed: _selectDateFrom,
-                          child: Text(fromDateBtnText)),
-                      ElevatedButton(
-                          style: ButtonStyle(
-                              side:
-                                  MaterialStateProperty.resolveWith<BorderSide>(
-                                      (states) =>
-                                          BorderSide(color: Color(0xffffad27))),
-                              backgroundColor:
-                                  MaterialStateProperty.resolveWith<Color>(
-                                      (states) => Color(0xffFFFAF2)),
-                              shape: MaterialStateProperty.resolveWith<
-                                  OutlinedBorder>((_) {
-                                return RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8));
-                              }),
-                              foregroundColor: MaterialStateProperty.all<Color>(
-                                  Color(0xffffad27))),
-                          onPressed: _selectTimeFrom,
-                          child: Text(fromTimeBtnText.format(context)))
-                    ],
-                  ),
-                )),
-            Card(
-                margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: SizedBox(
-                  height: 50,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      Text('To'),
-                      ElevatedButton(
-                          style: ButtonStyle(
-                              side:
-                                  MaterialStateProperty.resolveWith<BorderSide>(
-                                      (states) =>
-                                          BorderSide(color: Color(0xffffad27))),
-                              backgroundColor:
-                                  MaterialStateProperty.resolveWith<Color>(
-                                      (states) => Color(0xffFFFAF2)),
-                              shape: MaterialStateProperty.resolveWith<
-                                  OutlinedBorder>((_) {
-                                return RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8));
-                              }),
-                              foregroundColor: MaterialStateProperty.all<Color>(
-                                  Color(0xffffad27))),
-                          onPressed: _selectDateTo,
-                          child: Text(toDateBtnText)),
-                      ElevatedButton(
-                          style: ButtonStyle(
-                              side:
-                                  MaterialStateProperty.resolveWith<BorderSide>(
-                                      (states) =>
-                                          BorderSide(color: Color(0xffffad27))),
-                              backgroundColor:
-                                  MaterialStateProperty.resolveWith<Color>(
-                                      (states) => Color(0xffFFFAF2)),
-                              shape: MaterialStateProperty.resolveWith<
-                                  OutlinedBorder>((_) {
-                                return RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8));
-                              }),
-                              foregroundColor: MaterialStateProperty.all<Color>(
-                                  Color(0xffffad27))),
-                          onPressed: _selectTimeTo,
-                          child: Text(toTimeBtnText.format(context)))
-                    ],
-                  ),
-                )),
-            Card(
-                margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: SizedBox(
-                  height: 50,
-                  // width: 100,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      Text('Total Guests'),
-                      Center(
-                        child: SizedBox(
-                          height: 35,
-                          width: 70,
-                          child: TextField(
-                              decoration:
-                                  InputDecoration(border: OutlineInputBorder()),
-                              controller: guestController),
-                        ),
-                      )
-                    ],
-                  ),
-                )),
             Card(
                 color: Color(0xffFFFAF2),
                 margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
@@ -445,10 +387,10 @@ class _BookingState extends State<Booking> {
                     print('paymentMethod: ${paymentTypeValue}');
                   }
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => PaymentPage()));
+                      MaterialPageRoute(builder: (context) => RoomUsage()));
                 },
                 child: const Text(
-                  "Proceed With Payment",
+                  "Pay",
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ))));
   }
