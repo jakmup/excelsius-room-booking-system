@@ -47,8 +47,7 @@ android {
         applicationId "com.example.room_booking_system"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        // minSdkVersion flutter.minSdkVersion
-        minSdkVersion 19
+        minSdkVersion flutter.minSdkVersion
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
@@ -67,11 +66,10 @@ flutter {
     source '../..'
 }
 
-apply plugin:'com.google.gms.google-services'
-// plugins {
-//   // Add the Google services Gradle plugin
-//   id 'com.google.gms.google-services'
-// }
+plugins {
+  // Add the Google services Gradle plugin
+  id 'com.google.gms.google-services'
+}
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
